@@ -9,7 +9,11 @@ const compress = async () => {
   const fileToPath=join(dirname, 'files', 'archive.gz');
   const rs = createReadStream(fileFromPath);
   const ws = createWriteStream(fileToPath);
-  await pipeline(rs, createGzip(), ws);
+  try {
+    await pipeline(rs, createGzip(), ws);
+  } catch(err) {
+    console.log(err.message);
+  }
 };
 
 await compress();
